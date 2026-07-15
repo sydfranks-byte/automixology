@@ -1,1122 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auto Mixology — Custom · Style · Performance | Chicago, IL</title>
-  <meta name="description" content="Chicago's premier vehicle transformation studio. Vehicle wraps, PPF, ceramic coating, leather interior dye, and more. Get a free quote today." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ─── CUSTOM PROPERTIES ─────────────────────────────── */
-    :root {
-      --bg:           #000000;
-      --surface-1:    #0D0D0D;
-      --surface-2:    #111111;
-      --border:       #1a1a1a;
-      --blue:         #2B7FFF;
-      --blue-dim:     rgba(43, 127, 255, 0.15);
-      --blue-mid:     rgba(43, 127, 255, 0.4);
-      --gold:         #C9A84C;
-      --chrome-1:     #E8E8E8;
-      --chrome-2:     #9A9A9A;
-      --chrome-3:     #FFFFFF;
-      --text:         #FFFFFF;
-      --text-muted:   #8A8A8A;
-      --radius:       8px;
-      --transition:   0.3s ease;
-    }
-
-    /* ─── RESET & BASE ──────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      /* CSS noise grain */
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-    }
-
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    button { cursor: pointer; font-family: inherit; }
-
-    /* ─── REDUCED MOTION ────────────────────────────────── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-      html { scroll-behavior: auto; }
-    }
-
-    /* ─── UTILITY ───────────────────────────────────────── */
-    .section-label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }
-
-    .chrome-text {
-      background: linear-gradient(180deg, var(--chrome-1) 0%, var(--chrome-2) 50%, var(--chrome-3) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .script-heading {
-      font-family: 'Dancing Script', cursive;
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    .mono-heading {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .btn-neon {
-      display: inline-block;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text);
-      background: transparent;
-      border: 1px solid var(--blue);
-      padding: 0.85rem 2.2rem;
-      border-radius: var(--radius);
-      transition: box-shadow var(--transition), background var(--transition), transform var(--transition);
-      box-shadow: 0 0 12px var(--blue-dim);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-neon::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--blue);
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-
-    .btn-neon:hover {
-      box-shadow: 0 0 28px var(--blue-mid), 0 0 60px var(--blue-dim);
-      transform: translateY(-1px);
-    }
-
-    .btn-neon:hover::before { opacity: 0.12; }
-
-    .btn-solid {
-      display: inline-block;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text);
-      background: var(--blue);
-      border: 1px solid var(--blue);
-      padding: 0.85rem 2.2rem;
-      border-radius: var(--radius);
-      transition: box-shadow var(--transition), transform var(--transition);
-      box-shadow: 0 0 20px var(--blue-dim);
-    }
-
-    .btn-solid:hover {
-      box-shadow: 0 0 36px var(--blue-mid);
-      transform: scale(1.02) translateY(-1px);
-    }
-
-    .container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* ─── SCROLL FADE-IN ─────────────────────────────────── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ─── STICKY NAV ─────────────────────────────────────── */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      padding: 0.9rem 0;
-    }
-
-    .nav__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav__logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .nav__logo-text {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
-    .nav__logo-script {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.1rem;
-      background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ─── HERO ───────────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8rem 1.5rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Speed-line diagonal accent SVG background */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='900' viewBox='0 0 1440 900'%3E%3Cg opacity='0.045' stroke='%232B7FFF' stroke-width='1'%3E%3Cline x1='0' y1='600' x2='800' y2='900'/%3E%3Cline x1='100' y1='600' x2='900' y2='900'/%3E%3Cline x1='200' y1='600' x2='1000' y2='900'/%3E%3Cline x1='300' y1='600' x2='1100' y2='900'/%3E%3Cline x1='400' y1='600' x2='1200' y2='900'/%3E%3Cline x1='500' y1='600' x2='1300' y2='900'/%3E%3Cline x1='600' y1='600' x2='1400' y2='900'/%3E%3Cline x1='700' y1='600' x2='1440' y2='850'/%3E%3Cline x1='0' y1='700' x2='600' y2='900'/%3E%3Cline x1='0' y1='750' x2='400' y2='900'/%3E%3Cline x1='900' y1='600' x2='1440' y2='900'/%3E%3Cline x1='1050' y1='600' x2='1440' y2='840'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: cover;
-      background-position: bottom;
-      pointer-events: none;
-    }
-
-    /* Radial blue glow in center */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(ellipse, rgba(43,127,255,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero__content { position: relative; z-index: 1; }
-
-    .hero__crown {
-      margin: 0 auto 0.5rem;
-      display: block;
-    }
-
-    .hero__auto {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.2rem;
-    }
-
-    .hero__wordmark {
-      font-family: 'Dancing Script', cursive;
-      font-weight: 700;
-      font-size: clamp(4.5rem, 14vw, 10rem);
-      line-height: 0.95;
-      background: linear-gradient(180deg, #FFFFFF 0%, #D0D0D0 35%, #9A9A9A 65%, #FFFFFF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: none;
-      filter: drop-shadow(0 0 18px rgba(43,127,255,0.35)) drop-shadow(0 0 40px rgba(43,127,255,0.15));
-      margin-bottom: 0.6rem;
-      display: block;
-    }
-
-    .hero__tagline {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-    }
-
-    .hero__tagline span {
-      color: var(--blue);
-      margin: 0 0.4rem;
-    }
-
-    .hero__sub {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--chrome-1);
-      font-weight: 300;
-      margin-bottom: 2.5rem;
-      letter-spacing: 0.02em;
-    }
-
-    /* ─── SERVICES ───────────────────────────────────────── */
-    .services {
-      background: var(--surface-1);
-      padding: 6rem 0;
-    }
-
-    .services__header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .services__heading {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text);
-    }
-
-    .services__heading em {
-      font-style: normal;
-      background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .services__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-bottom: 3rem;
-    }
-
-    @media (max-width: 900px) {
-      .services__grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 560px) {
-      .services__grid { grid-template-columns: 1fr; }
-    }
-
-    .service-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem 1.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform var(--transition), border-color var(--transition);
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--blue);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-
-    .service-card:hover::before { transform: scaleX(1); }
-
-    .service-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(43,127,255,0.2);
-    }
-
-    .service-card__icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-      line-height: 1;
-    }
-
-    .service-card__name {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .service-card__desc {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    .services__cta { text-align: center; }
-
-    /* ─── ABOUT ──────────────────────────────────────────── */
-    .about {
-      background: var(--bg);
-      padding: 6rem 0;
-    }
-
-    .about__inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .about__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-
-    .about__heading {
-      font-family: 'Dancing Script', cursive;
-      font-weight: 700;
-      font-size: clamp(3rem, 7vw, 5rem);
-      background: linear-gradient(180deg, var(--chrome-1) 0%, var(--chrome-2) 50%, var(--chrome-3) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 12px rgba(43,127,255,0.2));
-      margin-bottom: 1.25rem;
-      line-height: 1;
-    }
-
-    .about__body {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-      margin-bottom: 2rem;
-    }
-
-    .about__body strong {
-      color: var(--text);
-    }
-
-    .about__values {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-
-    .about__value {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .about__value::before {
-      content: '—';
-      color: var(--blue);
-    }
-
-    .about__monogram-card {
-      background: var(--surface-1);
-      border: 1px solid rgba(201, 168, 76, 0.25);
-      border-radius: 12px;
-      padding: 3rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 40px rgba(201, 168, 76, 0.06), 0 0 80px rgba(43, 127, 255, 0.04);
-    }
-
-    /* ─── LOCATION ───────────────────────────────────────── */
-    .location {
-      background: var(--surface-1);
-      padding: 6rem 0;
-    }
-
-    .location__inner {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 3.5rem;
-      align-items: start;
-    }
-
-    @media (max-width: 768px) {
-      .location__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-
-    .location__heading {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text);
-      margin-bottom: 1.5rem;
-    }
-
-    .location__address {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      color: var(--blue);
-      text-shadow: 0 0 20px rgba(43,127,255,0.5), 0 0 40px rgba(43,127,255,0.2);
-      letter-spacing: 0.05em;
-      margin-bottom: 1.5rem;
-    }
-
-    .location__hours {
-      margin-bottom: 2rem;
-    }
-
-    .location__hours p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-    }
-
-    .location__hours strong {
-      color: var(--text);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    .location__map {
-      width: 100%;
-      height: 380px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-
-    .location__map iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      filter: invert(90%) hue-rotate(180deg) saturate(0.8);
-    }
-
-    /* ─── CONTACT ────────────────────────────────────────── */
-    .contact {
-      background: var(--bg);
-      padding: 6rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 800px;
-      height: 600px;
-      background: radial-gradient(ellipse, rgba(43,127,255,0.08) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .contact__header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-      position: relative;
-    }
-
-    .contact__heading {
-      font-family: 'Dancing Script', cursive;
-      font-weight: 700;
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      background: linear-gradient(180deg, var(--chrome-1) 0%, var(--chrome-2) 50%, var(--chrome-3) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 14px rgba(43,127,255,0.25));
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-
-    .contact__sub {
-      color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .contact__card {
-      background: var(--surface-1);
-      border: 1px solid var(--blue);
-      border-radius: 12px;
-      padding: clamp(2rem, 5vw, 3.5rem);
-      max-width: 700px;
-      margin: 0 auto;
-      box-shadow: 0 0 30px rgba(43,127,255,0.15);
-      position: relative;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    @media (max-width: 560px) {
-      .form-row { grid-template-columns: 1fr; }
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.45rem;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.85rem 1rem;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    .form-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8A8A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      padding-right: 2.5rem;
-    }
-
-    .form-group select option {
-      background: var(--surface-2);
-      color: var(--text);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: #444;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(43,127,255,0.1);
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: var(--blue);
-      border: none;
-      border-radius: var(--radius);
-      padding: 1rem;
-      color: var(--text);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: box-shadow var(--transition), transform var(--transition);
-      box-shadow: 0 0 20px rgba(43,127,255,0.3);
-      margin-top: 0.5rem;
-    }
-
-    .btn-submit:hover {
-      box-shadow: 0 0 40px rgba(43,127,255,0.55);
-      transform: scale(1.01) translateY(-1px);
-    }
-
-    .form-success {
-      display: none;
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-    }
-
-    .form-success__icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-success__heading {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 0.75rem;
-    }
-
-    .form-success__body {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* ─── FOOTER ─────────────────────────────────────────── */
-    .footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-    }
-
-    .footer__monogram {
-      margin: 0 auto 1.25rem;
-      display: block;
-    }
-
-    .footer__name {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-    }
-
-    .footer__name span {
-      color: var(--blue);
-      margin: 0 0.4rem;
-    }
-
-    .footer__social {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer__social a {
-      color: var(--text-muted);
-      transition: color var(--transition);
-      display: flex;
-      align-items: center;
-    }
-
-    .footer__social a:hover { color: var(--blue); }
-
-    .footer__copy {
-      font-size: 0.72rem;
-      color: #444;
-      letter-spacing: 0.08em;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Auto Mixology — Automotive Design Studio | Chicago, IL</title>
+<meta name="description" content="Chicago's automotive design studio. Custom vinyl wraps, colored PPF, paint protection film, and chrome wraps. From factory to one-of-one — book your free consultation." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════════════
-       NAV
-  ═══════════════════════════════════════════════════ -->
-  <nav class="nav" aria-label="Main navigation">
-    <div class="container nav__inner">
-      <a href="#hero" class="nav__logo" aria-label="Auto Mixology home">
-        <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M20 4L24 13H36L27 19L30 30L20 24L10 30L13 19L4 13H16L20 4Z" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <div class="nav__logo-text">Auto</div>
-          <div class="nav__logo-script">Mixology</div>
-        </div>
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="container nav__inner">
+    <a href="#top" class="nav__logo">Auto <span>Mixology</span></a>
+    <div class="nav__links">
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav__actions">
+      <a href="tel:+13129197321" class="nav__phone">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>(312) 919-7321</span>
       </a>
-      <a href="#contact" class="btn-neon">Get a Quote</a>
+      <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500" class="btn btn-primary">Get a Quote</a>
+      <button class="nav__toggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
-  </nav>
+  </div>
+  <div class="mobile-menu">
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#faq">FAQ</a>
+    <a href="tel:+13129197321">(312) 919-7321</a>
+    <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500" class="btn btn-primary btn-block">Get a Quote</a>
+  </div>
+</nav>
 
-  <!-- ═══════════════════════════════════════════════════
-       HERO
-  ═══════════════════════════════════════════════════ -->
-  <section class="hero" id="hero">
-    <div class="hero__content">
-      <!-- Crown above the M -->
-      <svg class="hero__crown" width="56" height="44" viewBox="0 0 56 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M4 36L10 12L20 24L28 4L36 24L46 12L52 36H4Z" stroke="#C9A84C" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-        <line x1="4" y1="40" x2="52" y2="40" stroke="#C9A84C" stroke-width="1.5"/>
-        <circle cx="28" cy="4" r="2.5" fill="#C9A84C"/>
-        <circle cx="9" cy="12" r="2" fill="#C9A84C"/>
-        <circle cx="47" cy="12" r="2" fill="#C9A84C"/>
-        <!-- blue star accent -->
-        <path d="M46 6L47.2 9.4H51L48.1 11.5L49.2 15L46 12.9L42.8 15L44 11.5L41.1 9.4H44.8L46 6Z" fill="#2B7FFF" opacity="0.9"/>
-      </svg>
+<!-- ═══════════════════════════════ TOP STRIP ═══════════════════════════════ -->
+<div id="top" class="top-strip">
+  For Chicago vehicle owners who are tired of a stock look and ready for a car that matches their <strong>personality</strong>.
+</div>
 
-      <p class="hero__auto">Auto</p>
-      <span class="hero__wordmark">Mixology</span>
-      <p class="hero__tagline">Custom <span>·</span> Style <span>·</span> Performance</p>
-      <p class="hero__sub">Chicago's premier vehicle transformation studio.</p>
-      <a href="#contact" class="btn-neon">Get a Free Quote</a>
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<header class="hero">
+  <div class="container hero__inner">
+    <p class="eyebrow">Automotive Design Studio · Chicago, IL</p>
+    <h1>From Factory to <em>One-of-One.</em></h1>
+    <p class="hero__sub">Our expert mixologists blend color, finish, and craftsmanship to build the custom car of your dreams — vinyl wraps, colored PPF, paint protection, and more.</p>
+    <div class="hero__actions">
+      <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500" class="btn btn-primary">I'm Ready — Get My Free Quote</a>
+      <a href="#projects" class="btn btn-outline">Browse Our Projects</a>
     </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       SERVICES
-  ═══════════════════════════════════════════════════ -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="services__header fade-up">
-        <p class="section-label">What We Do</p>
-        <h2 class="services__heading">Every Detail. <em>Intentional.</em></h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat__num" data-count="5" data-suffix="+">0+</div>
+        <div class="stat__label">Years Experience</div>
       </div>
-
-      <div class="services__grid">
-
-        <div class="service-card fade-up">
-          <span class="service-card__icon" aria-hidden="true">🎨</span>
-          <h3 class="service-card__name">Full Vehicle Wraps</h3>
-          <p class="service-card__desc">Transform your entire vehicle with premium vinyl. Any color, any finish — matte, gloss, satin, or something entirely your own.</p>
-        </div>
-
-        <div class="service-card fade-up">
-          <span class="service-card__icon" aria-hidden="true">🛡️</span>
-          <h3 class="service-card__name">Paint Protection Film (PPF)</h3>
-          <p class="service-card__desc">Invisible armor. Keep your paint flawless for years against road debris, chips, and everyday wear.</p>
-        </div>
-
-        <div class="service-card fade-up">
-          <span class="service-card__icon" aria-hidden="true">💎</span>
-          <h3 class="service-card__name">Ceramic Coating</h3>
-          <p class="service-card__desc">Hydrophobic, scratch-resistant, mirror-finish protection that bonds at the molecular level and lasts for years.</p>
-        </div>
-
-        <div class="service-card fade-up">
-          <span class="service-card__icon" aria-hidden="true">🪡</span>
-          <h3 class="service-card__name">Leather Interior Dye</h3>
-          <p class="service-card__desc">Restore or completely transform your interior color. Fade, cracks, and worn leather — gone. New look, new feel.</p>
-        </div>
-
-        <div class="service-card fade-up">
-          <span class="service-card__icon" aria-hidden="true">✨</span>
-          <h3 class="service-card__name">Chrome &amp; Color Shift Wraps</h3>
-          <p class="service-card__desc">Head-turning finishes that shift and shimmer in the light. The kind of wrap that stops traffic — on purpose.</p>
-        </div>
-
-        <div class="service-card fade-up">
-          <span class="service-card__icon" aria-hidden="true">⚡</span>
-          <h3 class="service-card__name">Tesla Packages</h3>
-          <p class="service-card__desc">Flat-rate protection and style packages built specifically for Tesla owners. Wrap, PPF, ceramic — all in one visit.</p>
-        </div>
-
+      <div class="stat">
+        <div class="stat__num" data-count="100" data-suffix="%">0%</div>
+        <div class="stat__label">Customer Satisfaction</div>
       </div>
-
-      <div class="services__cta fade-up">
-        <a href="#contact" class="btn-neon">Get a Quote</a>
+      <div class="stat">
+        <div class="stat__num" data-count="14" data-suffix="+">0+</div>
+        <div class="stat__label">Builds Completed</div>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <!-- ═══════════════════════════════════════════════════
-       ABOUT
-  ═══════════════════════════════════════════════════ -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about__inner">
+<!-- ═══════════════════════════════ SERVICES ═══════════════════════════════ -->
+<section id="services" class="bg-white">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="eyebrow">Our Services</p>
+      <h2>Custom Finishes Engineered to Keep Your Vehicle Turning Heads</h2>
+      <p>From full color changes to invisible protection, Auto Mixology delivers premium wraps, PPF, and interior work with lasting results and unmatched attention to detail.</p>
+    </div>
 
-        <div class="fade-up">
-          <p class="section-label">Our Story</p>
-          <h2 class="about__heading">Built Different.</h2>
-          <p class="about__body">
-            Auto Mixology isn't your average wrap shop. <strong>We're a detail-obsessed, craft-first studio built by car people, for car people.</strong> Every vehicle that leaves our bay has been treated like it's our own — because that's the only standard we know. Based in Chicago, built for the culture.
-          </p>
-          <div class="about__values">
-            <span class="about__value">Vision</span>
-            <span class="about__value">Focus</span>
-            <span class="about__value">Detail</span>
-            <span class="about__value">Performance</span>
-            <span class="about__value">Passion</span>
-          </div>
-        </div>
+    <div class="services__grid">
+      <div class="service-card fade-up">
+        <div class="service-card__swatch" style="background:linear-gradient(135deg,#E7C948,#C8D9E6);">🎨</div>
+        <h3>Vinyl Wraps</h3>
+        <p class="service-card__price">Starting at $2,750</p>
+        <p>Change your color, add a finish, or completely reinvent your look. No paint or permanence — change your look as much as you change your mind.</p>
+        <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500">Learn More →</a>
+      </div>
 
-        <div class="about__monogram-card fade-up" aria-label="Auto Mixology AM monogram">
-          <!-- AM Crown Monogram SVG -->
-          <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AM crown monogram">
-            <filter id="gold-glow">
-              <feGaussianBlur stdDeviation="4" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <g filter="url(#gold-glow)">
-              <!-- Crown -->
-              <path d="M110 22L122 50H148L128 64L136 92L110 76L84 92L92 64L72 50H98L110 22Z"
-                    stroke="#C9A84C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
-              <circle cx="110" cy="22" r="3.5" fill="#C9A84C"/>
-              <circle cx="71" cy="50" r="3" fill="#C9A84C"/>
-              <circle cx="149" cy="50" r="3" fill="#C9A84C"/>
+      <div class="service-card fade-up">
+        <div class="service-card__swatch" style="background:linear-gradient(135deg,#B8C4CC,#567C8D);">💧</div>
+        <h3>Colored PPF</h3>
+        <p class="service-card__price">Starting at $5,500</p>
+        <p>A color change and long-term protection, done as one seamless finish. Colored PPF transforms your vehicle's look while shielding the paint underneath.</p>
+        <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500">Learn More →</a>
+      </div>
 
-              <!-- A letterform -->
-              <path d="M60 188L90 108L110 155L130 108L160 188"
-                    stroke="#C9A84C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="73" y1="162" x2="147" y2="162" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
+      <div class="service-card fade-up">
+        <div class="service-card__swatch" style="background:linear-gradient(135deg,#DCE7EF,#8FA8B8);">🛡️</div>
+        <h3>Paint Protection Film</h3>
+        <p class="service-card__price">Starting at $4,500</p>
+        <p>A nearly invisible layer that keeps your paint looking flawless — protected from chips, scratches, and everyday wear. Preserves your factory finish exactly as designed.</p>
+        <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500">Learn More →</a>
+      </div>
 
-              <!-- M letterform overlay (subtle, inside the A) -->
-              <path d="M82 162L82 128L110 150L138 128L138 162"
-                    stroke="#C9A84C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-
-              <!-- Blue star accent -->
-              <path d="M148 28L149.8 33H155L150.8 35.8L152.2 41L148 38.3L143.8 41L145.2 35.8L141 33H146.2L148 28Z"
-                    fill="#2B7FFF"/>
-            </g>
-          </svg>
-        </div>
-
+      <div class="service-card fade-up">
+        <div class="service-card__swatch" style="background:linear-gradient(135deg,#2F4156,#8FA8B8);">✨</div>
+        <h3>Chrome Wraps</h3>
+        <p class="service-card__price">Starting at $6,000</p>
+        <p>A mirror-like finish that turns heads instantly, fully reversible and applied with the same precision as every wrap we do — protecting your factory paint underneath.</p>
+        <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500">Learn More →</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════════════════════════════════════════
-       LOCATION
-  ═══════════════════════════════════════════════════ -->
-  <section class="location" id="location">
-    <div class="container">
-      <div class="location__inner">
+<!-- ═══════════════════════════════ MIXOLOGIST APPROACH ═══════════════════════════════ -->
+<section class="approach">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="eyebrow eyebrow--on-dark">What Is Our "Mixologist" Approach?</p>
+      <h2>We Want to Craft the Perfect Build for You.</h2>
+      <p>Just like a master mixologist, we don't follow tired recipes. We craft an experience from the base up that perfectly fits your personality, your taste, and the statement you want to make.</p>
+    </div>
 
-        <div class="fade-up">
-          <p class="section-label">Find Us</p>
-          <h2 class="location__heading">We're in Chicago.</h2>
-          <p class="location__address">Chicago, IL</p>
-
-          <div class="location__hours">
-            <strong>Hours</strong>
-            <p>Monday – Saturday &nbsp;·&nbsp; 9AM – 6PM</p>
-            <p>Sunday &nbsp;·&nbsp; By Appointment</p>
-          </div>
-
-          <a href="#contact" class="btn-neon">Book Your Appointment</a>
-        </div>
-
-        <div class="location__map fade-up">
-          <iframe
-            src="https://maps.google.com/maps?q=Chicago,IL&output=embed"
-            title="Auto Mixology location — Chicago, IL"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen
-          ></iframe>
-        </div>
-
+    <div class="approach__grid">
+      <div class="approach-card fade-up">
+        <p class="approach-card__tag">Process #1</p>
+        <h3>The "Surprise Me"</h3>
+        <p>You share your personality, style, and budget. We'll mix up 2–3 unique concepts, and you can pick the winner — or let us choose for a truly grand reveal.</p>
+      </div>
+      <div class="approach-card fade-up">
+        <p class="approach-card__tag">Process #2</p>
+        <h3>The "Full Control"</h3>
+        <p>You drive the creative process. We provide the expertise and tools to help you bring your exact vision for your dream car to life, step by meticulous step.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════════════════════════════════════════
-       CONTACT / QUOTE FORM
-  ═══════════════════════════════════════════════════ -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="contact__header fade-up">
-        <p class="section-label">Get a Quote</p>
-        <h2 class="contact__heading">Your Vision. Our Craft.</h2>
-        <p class="contact__sub">Fill out the form below and we'll reach out within 24 hours with a custom quote.</p>
+<!-- ═══════════════════════════════ PROJECTS SHOWCASE ═══════════════════════════════ -->
+<section id="projects" class="bg-white">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="eyebrow">Recent Work</p>
+      <h2>See the Stunning Transformations From Our Studio</h2>
+      <p>Here's a glimpse of some recent projects — and the kind of transformation you can look forward to when you work with us.</p>
+    </div>
+
+    <div class="projects__grid">
+      <div class="project-card fade-up">
+        <div class="project-card__swatch" style="background:linear-gradient(135deg,#1c1c1c,#4a4a4a);"><span class="project-card__tag-icon">🚙</span></div>
+        <div class="project-card__body">
+          <p class="project-card__eyebrow">For the Bold</p>
+          <h3 class="project-card__title">Satin Black Stealth</h3>
+          <p class="project-card__vehicle">Mercedes-AMG GLE</p>
+        </div>
       </div>
 
-      <div class="contact__card fade-up">
-        <form id="quoteForm" novalidate>
+      <div class="project-card fade-up">
+        <div class="project-card__swatch" style="background:linear-gradient(135deg,#F4E04D,#C9A400);"><span class="project-card__tag-icon">🚗</span></div>
+        <div class="project-card__body">
+          <p class="project-card__eyebrow">For the Adventurous</p>
+          <h3 class="project-card__title">Electric Graphic Pop</h3>
+          <p class="project-card__vehicle">Volkswagen GTI</p>
+        </div>
+      </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fullName">Full Name</label>
-              <input type="text" id="fullName" name="fullName" placeholder="John Doe" autocomplete="name" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="(312) 000-0000" autocomplete="tel" required />
-            </div>
-          </div>
+      <div class="project-card fade-up">
+        <div class="project-card__swatch" style="background:linear-gradient(135deg,#B9C2C8,#7C8A93);"><span class="project-card__tag-icon">🏎️</span></div>
+        <div class="project-card__body">
+          <p class="project-card__eyebrow">For the Sleek &amp; Modern</p>
+          <h3 class="project-card__title">Nardo Grey Sheen</h3>
+          <p class="project-card__vehicle">BMW M4</p>
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
-          </div>
+      <div class="project-card fade-up">
+        <div class="project-card__swatch" style="background:linear-gradient(135deg,#FF9FD6,#E869BA);"><span class="project-card__tag-icon">🚘</span></div>
+        <div class="project-card__body">
+          <p class="project-card__eyebrow">For the Head-Turner</p>
+          <h3 class="project-card__title">Satin Pink Wrap</h3>
+          <p class="project-card__vehicle">Tesla Model 3</p>
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label for="vehicle">Vehicle Year / Make / Model</label>
-            <input type="text" id="vehicle" name="vehicle" placeholder="2023 Tesla Model S" required />
-          </div>
+      <div class="project-card fade-up">
+        <div class="project-card__swatch" style="background:linear-gradient(135deg,#D64545,#8C1F1F);"><span class="project-card__tag-icon">🚙</span></div>
+        <div class="project-card__body">
+          <p class="project-card__eyebrow">Color Change Wrap</p>
+          <h3 class="project-card__title">Atlanta Falcons Red</h3>
+          <p class="project-card__vehicle">Dodge Charger</p>
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label for="service">Service Interested In</label>
-            <select id="service" name="service" required>
-              <option value="" disabled selected>Select a service…</option>
-              <option value="wrap">Full Vehicle Wrap</option>
-              <option value="ppf">Paint Protection Film (PPF)</option>
-              <option value="ceramic">Ceramic Coating</option>
-              <option value="leather">Leather Interior Dye</option>
-              <option value="chrome">Chrome / Color Shift Wrap</option>
-              <option value="tesla">Tesla Package</option>
-              <option value="multiple">Multiple / Not Sure Yet</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Message / Additional Details</label>
-            <textarea id="message" name="message" placeholder="Tell us about your vision, current condition, timeline, or any questions you have…"></textarea>
-          </div>
-
-          <button type="submit" class="btn-submit">Send My Request</button>
-        </form>
-
-        <div class="form-success" id="formSuccess" aria-live="polite">
-          <div class="form-success__icon" aria-hidden="true">✅</div>
-          <h3 class="form-success__heading">We got you.</h3>
-          <p class="form-success__body">Expect a call or text within 24 hours. We'll review your request and reach out with a custom quote.</p>
+      <div class="project-card fade-up">
+        <div class="project-card__swatch" style="background:linear-gradient(135deg,#D98A3D,#8C4F1C);"><span class="project-card__tag-icon">🚗</span></div>
+        <div class="project-card__body">
+          <p class="project-card__eyebrow">Vinyl Wrap</p>
+          <h3 class="project-card__title">Matte Autumn Fire</h3>
+          <p class="project-card__vehicle">Audi Q5</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════════════ -->
-  <footer class="footer">
-    <!-- Small AM crown monogram -->
-    <svg class="footer__monogram" width="36" height="36" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M28 6L33 18H46L36 25L39 38L28 31L17 38L20 25L10 18H23L28 6Z"
-            stroke="#C9A84C" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-      <circle cx="28" cy="6" r="2" fill="#C9A84C"/>
-      <circle cx="9.5" cy="18" r="1.8" fill="#C9A84C"/>
-      <circle cx="46.5" cy="18" r="1.8" fill="#C9A84C"/>
-    </svg>
+    <div class="projects__cta fade-up">
+      <a href="projects.html" class="btn btn-outline">View All Completed Projects →</a>
+    </div>
+  </div>
+</section>
 
-    <p class="footer__name">
-      Auto Mixology <span>·</span> Chicago, IL <span>·</span> Custom <span>·</span> Style <span>·</span> Performance
-    </p>
+<!-- ═══════════════════════════════ MID CTA ═══════════════════════════════ -->
+<section class="mid-cta">
+  <div class="container">
+    <p class="eyebrow">Ready to Shake Things Up?</p>
+    <h2 class="fade-up">Even If You Don't Know Exactly What Your "Dream Car" Looks Like… It's OK.</h2>
+    <p class="fade-up">That's what our design consultations are for. We're a team of passionate creators dedicated to uncovering the perfect look that brings out the best in you and your vehicle.</p>
+    <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500" class="btn btn-outline--light fade-up">Start My Design Consultation</a>
+  </div>
+</section>
 
-    <div class="footer__social">
-      <!-- Instagram -->
-      <a href="#" aria-label="Auto Mixology on Instagram">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-        </svg>
-      </a>
-      <!-- TikTok -->
-      <a href="#" aria-label="Auto Mixology on TikTok">
-        <svg width="20" height="22" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
-        </svg>
-      </a>
+<!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
+<section class="bg-sky">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="eyebrow">Don't Just Take Our Word for It</p>
+      <h2>Trusted by Valued Clients</h2>
     </div>
 
-    <p class="footer__copy">&copy; 2025 Auto Mixology. All rights reserved.</p>
-  </footer>
+    <div class="testimonials__grid">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p class="quote">"[Add Javon's testimonial quote here]"</p>
+        <p class="testimonial-card__name">Javon Tracy</p>
+        <p class="testimonial-card__vehicle">Jeep Grand Cherokee SRT</p>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p class="quote">"[Add Lameta's testimonial quote here]"</p>
+        <p class="testimonial-card__name">Lameta Brockington</p>
+        <p class="testimonial-card__vehicle">Dodge Charger</p>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p class="quote">"[Add a third client testimonial quote here]"</p>
+        <p class="testimonial-card__name">Auto Mixology Client</p>
+        <p class="testimonial-card__vehicle">Toyota 4Runner</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- ═══════════════════════════════════════════════════
-       JS — Scroll fade-in + Form submit
-  ═══════════════════════════════════════════════════ -->
-  <script>
-    // Scroll-triggered fade-in via IntersectionObserver
-    (function () {
-      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<!-- ═══════════════════════════════ OWNER / STORY ═══════════════════════════════ -->
+<section id="about" class="bg-white">
+  <div class="container owner">
+    <div class="owner__photo fade-up" aria-hidden="true">📷</div>
+    <div class="owner__body fade-up">
+      <p class="eyebrow">Meet the Owner &amp; Expert Mixologist</p>
+      <h2>It's More Than a Wrap, It's a Partnership.</h2>
+      <p>We work side-by-side to design and perfect a look that is truly yours — building an experience where your ideas and our expertise combine to create something that turns heads and tells your story.</p>
+      <p>A personal connection is key to an amazing design. That's why we take the time to know you, your tastes, and the personality you want to project before we begin the first sketch.</p>
+      <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500" class="btn btn-outline">Let's Craft Your Vision</a>
+    </div>
+  </div>
+</section>
 
-      if (prefersReduced) {
-        document.querySelectorAll('.fade-up').forEach(function (el) {
-          el.classList.add('visible');
-        });
-        return;
-      }
+<!-- ═══════════════════════════════ FAQ ═══════════════════════════════ -->
+<section id="faq" class="bg-sky">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="eyebrow">Answers to Your Questions</p>
+      <h2>Frequently Asked Questions</h2>
+    </div>
 
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
+    <div class="faq fade-up">
+      <div class="faq-item">
+        <button class="faq-item__q">
+          What services do you offer?
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>We specialize in full and partial vinyl wraps, colored PPF, clear paint protection film, and chrome/color-shift wraps. Tell us your vehicle and vision during your consultation and we'll recommend the right service.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__q">
+          How long does a wrap or PPF installation take?
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Timelines vary by vehicle size and scope of work. Most full wraps and PPF installs take a few days from drop-off to pickup — we'll confirm an exact timeline for your build during booking.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__q">
+          Is a wrap or PPF reversible?
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes — vinyl wraps and PPF are designed to be removed without damaging your factory paint when properly installed and maintained, so you can always return to your original finish.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__q">
+          Will paint protection film change the look of my car?
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Clear PPF preserves your factory finish exactly as it was designed. Colored PPF gives you a full color change while adding that same layer of protection.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__q">
+          Do you offer a warranty on your work?
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>We stand behind our installs. Ask us about the specific warranty coverage for your service during your consultation — it varies by material and package.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__q">
+          How can I book a consultation?
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Tap "Get a Quote" anywhere on this page to fill out a short form, or call us directly at (312) 919-7321. We'll follow up to lock in your design consultation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      document.querySelectorAll('.fade-up').forEach(function (el) {
-        observer.observe(el);
-      });
-    })();
+<!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
+<section class="final-cta">
+  <div class="container">
+    <p class="eyebrow eyebrow--on-dark fade-up">Ready to Give Your Car a New Identity?</p>
+    <h2 class="fade-up">Your Car's Perfect Cocktail Awaits.</h2>
+    <p class="fade-up">From color-change wraps to full custom transformations, Auto Mixology delivers flawless installs, transparent pricing, and craftsmanship worthy of your exotic.</p>
+    <div class="final-cta__actions fade-up">
+      <a href="https://tally.so/r/Bz9Z1N" data-tally-open="Bz9Z1N" data-tally-layout="modal" data-tally-width="500" class="btn btn-primary">Request Quote →</a>
+      <a href="tel:+13129197321" class="btn btn-outline--light">📞 Call Now</a>
+    </div>
+  </div>
+</section>
 
-    // Quote form submit — show inline success
-    document.getElementById('quoteForm').addEventListener('submit', function (e) {
-      e.preventDefault();
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">Auto <span>Mixology</span></div>
+        <p>Expert automotive services backed by quality work, honest pricing, and dependable customer care.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Auto Mixology on TikTok">
+            <svg width="16" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+          </a>
+          <a href="#" aria-label="Auto Mixology on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@automixologychi.com">info@automixologychi.com</a></li>
+          <li><a href="tel:+13129197321">(312) 919-7321</a></li>
+          <li><a href="https://maps.google.com/?q=2701+S+Wabash+Ave,+Chicago,+IL+60616" target="_blank" rel="noopener">2701 S Wabash Ave, Chicago, IL 60616</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Auto Mixology. All rights reserved.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
 
-      var form = this;
-      var successEl = document.getElementById('formSuccess');
-
-      // Basic validation feedback (native + custom)
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      form.style.display = 'none';
-      successEl.style.display = 'block';
-    });
-  </script>
-
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script src="assets/script.js"></script>
 </body>
 </html>
